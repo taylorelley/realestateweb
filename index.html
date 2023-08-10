@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Undervalued Properties</title>
+</head>
+<body>
+    <h1>Undervalued Properties</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Price</th>
+            <th>Location</th>
+            <th>Type</th>
+            <th>Bedrooms</th>
+            <th>Bathrooms</th>
+            <th>Area</th>
+            <th>Land Area</th>
+        </tr>
+        {% for property in properties %}
+        <tr>
+            <td>{{ property.id }}</td>
+            <td>{{ property.price }}</td>
+            <td>{{ property.location }}</td>
+            <td>{{ property.type }}</td>
+            <td>{{ property.bedrooms }}</td>
+            <td>{{ property.bathrooms }}</td>
+            <td>{{ property.area }}</td>
+            <td>{{ property.land_area }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

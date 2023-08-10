@@ -1,19 +1,11 @@
 import requests
-import json
 
-class RealestateAPI:
-    def __init__(self, base_url):
-        self.base_url = base_url
+class RealEstateAPI:
+    def __init__(self):
+        self.base_url = "http://api.realestate.co.nz"
 
-    def make_request(self, endpoint):
-        url = self.base_url + endpoint
-        response = requests.get(url)
-        if response.status_code != 200:
-            raise Exception(f"Request to {url} failed with status code {response.status_code}")
-        return response.json()
-
-    def parse_properties(self, data):
-        properties = []
-        for item in data['listings']:
-            properties.append(Property(item))
-        return properties
+    def fetch_all_data(self):
+        # Fetch all the data from the API
+        response = requests.get(f"{self.base_url}/all")
+        data = response.json()
+        return data

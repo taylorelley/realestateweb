@@ -1,3 +1,3 @@
 #!/bin/bash
-docker build -t realestate .
-docker run -p 5000:5000 realestate
+pip install -r requirements.txt
+python main.py

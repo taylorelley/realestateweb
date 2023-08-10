@@ -1,24 +1,26 @@
-from realestate_api import RealestateAPI
-from database import Database
-from property import Property
-
-def get_all_properties(api, db):
-    data = api.make_request('/properties')
-    properties = api.parse_properties(data)
-    for property in properties:
-        query = f"INSERT INTO properties (id, title, price, location, listing_date, description) VALUES ({property.id}, '{property.title}', {property.price}, '{property.location}', '{property.listing_date}', '{property.description}')"
-        db.execute_query(query)
-
-def find_undervalued_properties(db):
-    query = "SELECT * FROM properties WHERE price < (SELECT AVG(price) FROM properties)"
-    db.execute_query(query)
+from realestate_api import RealEstateAPI
+from database_handler import DatabaseHandler
+from data_analyzer import DataAnalyzer
+from web_interface import WebInterface
 
 def main():
-    api = RealestateAPI('http://api.realestate.co.nz')
-    db = Database('localhost', 'root', 'password', 'realestate')
-    get_all_properties(api, db)
-    find_undervalued_properties(db)
-    db.close()
+    # Create instances of the classes
+    api = RealEstateAPI()
+    db = DatabaseHandler()
+    analyzer = DataAnalyzer()
+    web = WebInterface()
+
+    # Fetch all the data from the API
+    data = api.fetch_all_data()
+
+    # Store the data in the database
+    db.store_data(data)
+
+    # Analyze the data to find undervalued properties
+    undervalued_properties = analyzer.find_undervalued_properties(data)
+
+    # Display the results on the web interface
+    web.display_results(undervalued_properties)
 
 if __name__ == "__main__":
     main()
